@@ -27,7 +27,22 @@ const removeHighlighted =
     }
 
 const suggestionsToFixes = [['unicorn/prefer-code-point'], ['@typescript-eslint/no-unnecessary-type-constraint']]
-const addFixes = []
+const addFixes = [
+    [
+        '@typescript-eslint/no-unnecessary-condition',
+        (r, sourceText) => {
+            const end = getOffset(sourceText, r.endLine, r.endColumn)
+            const expectedTexts = [' ?? []', ' ?? {}', ' ?? false', ' ?? true', ' ?? 0', ' ?? ""', ' ?? null', ' ?? undefined']
+            const exptectedTextHit = expectedTexts.find(expectedText => sourceText.slice(end).startsWith(expectedText))
+            if (exptectedTextHit) {
+                return {
+                    range: [end, end + exptectedTextHit.length],
+                    newText: '',
+                }
+            }
+        },
+    ],
+]
 const addSuggestions = [
     // ['@typescript-eslint/no-floating-promises', [[removeHighlighted(), 'Remove it why not']]]
 ]
