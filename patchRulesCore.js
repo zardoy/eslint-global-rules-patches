@@ -34,7 +34,6 @@ module.exports = patchRulesOfFn => {
         Object.defineProperty(Linter.prototype, '_verifyWithoutProcessors', {
             value(textOrSourceCode, config, filenameOrOptions) {
                 const result = verify0.call(this, textOrSourceCode, config, filenameOrOptions)
-                console.log(result)
                 if (typeof patchRulesOfFn === 'function')
                     return patchRulesOfFn(result, textOrSourceCode, typeof filenameOrOptions === 'object' ? filenameOrOptions.filename : filenameOrOptions)
                 return result

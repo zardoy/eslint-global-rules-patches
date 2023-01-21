@@ -23,6 +23,6 @@ declare type ReportedMessage =
           severity: number
           nodeType: null
           fix?: RuleFix
-          suggestions?: any[]
+          suggestions?: { messageId?: string; desc: string; fix: RuleFix }[]
           messageId?: string
       }
